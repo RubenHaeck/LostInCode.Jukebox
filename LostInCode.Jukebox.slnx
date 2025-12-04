@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LostInCode.Jukebox.UI/LostInCode.Jukebox.UI.Client/LostInCode.Jukebox.UI.Client.csproj" />
+  <Project Path="LostInCode.Jukebox.UI/LostInCode.Jukebox.UI/LostInCode.Jukebox.UI.csproj" />
+</Solution>

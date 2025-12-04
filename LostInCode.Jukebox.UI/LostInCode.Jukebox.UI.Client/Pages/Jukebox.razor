@@ -1,0 +1,86 @@
+﻿@page "/jukebox"
+
+<div class="jukebox-container">
+    <div class="jukebox">
+        <!-- Top Section -->
+        <div class="jukebox-top">
+            <div class="brand-name">SPOTIFY JUKEBOX</div>
+        </div>
+
+        <!-- Display Section -->
+        <div class="display-section">
+            <div class="now-playing-display">
+                <div class="album-art">
+                    @if (!string.IsNullOrEmpty(currentTrack?.AlbumArtUrl))
+                    {
+                        <img src="@currentTrack.AlbumArtUrl" alt="Album Art" />
+                    }
+                    else
+                    {
+                        <div class="no-album">♪</div>
+                    }
+                </div>
+                <div class="track-info">
+                    <div class="track-name">@(currentTrack?.Name ?? "Select a song")</div>
+                    <div class="artist-name">@(currentTrack?.Artist ?? "No track playing")</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: @progressPercentage%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <button class="control-btn previous" @onclick="PreviousTrack">
+                <span>⏮</span>
+            </button>
+            <button class="control-btn play-pause" @onclick="TogglePlayPause">
+                <span>@(isPlaying ? "⏸" : "▶")</span>
+            </button>
+            <button class="control-btn next" @onclick="NextTrack">
+                <span>⏭</span>
+            </button>
+        </div>
+
+        <!-- Playlist Section -->
+        <div class="playlist-section">
+            <div class="playlist-header">
+                <h3>QUEUE</h3>
+                <button class="search-btn" @onclick="ToggleSearch">🔍</button>
+            </div>
+
+            @if (showSearch)
+            {
+                <div class="search-box">
+                    <input type="text"
+                           placeholder="Search songs..."
+                           @bind="searchQuery"
+                           @bind:event="oninput"
+                           @onkeyup="OnSearchKeyUp" />
+                </div>
+            }
+
+            <div class="playlist-items">
+                @foreach (var track in playlist)
+                {
+                    <div class="playlist-item @(track.IsPlaying ? "active" : "")"
+                         @onclick="() => SelectTrack(track)">
+                        <div class="track-number">@track.Number</div>
+                        <div class="track-details">
+                            <div class="track-title">@track.Name</div>
+                            <div class="track-artist">@track.Artist</div>
+                        </div>
+                        <div class="track-duration">@track.Duration</div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Coin Slot Decoration -->
+        <div class="coin-slot">
+            <div class="slot"></div>
+            <div class="slot-text">INSERT SPOTIFY TOKEN</div>
+        </div>
+    </div>
+</div>
